@@ -16,20 +16,20 @@
 
  SYNERGIES = [
    ["",0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,  1,0,0,1,0,0,0,1,1,9,2,0,0,0,0,0],
-   [0,"",3,0,0,0,0,0,0,0,0,0,4,0,0,0,  6,0,0,0,0,0,0,4,4,0,6,0,0,0,0,0],
-   [0,0,"",0,0,0,0,1,0,0,0,0,4,0,0,0,  6,0,0,0,0,0,0,4,5,2,9,0,0,0,0,0],
+   [0,"",3,0,0,0,0,0,0,0,0,0,8,0,0,0,  6,0,0,0,0,0,0,4,4,0,6,0,0,0,0,0],
+   [0,0,"",0,0,0,0,4,0,0,0,0,8,0,0,0,  6,0,0,0,0,0,0,4,5,2,9,0,0,0,0,0],
    [0,0,0,"",0,0,0,0,4,0,0,0,0,0,0,0,  0,0,0,0,1,0,1,0,0,0,0,5,0,0,9,0],
    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,0,0,  0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
    [0,0,0,0,0,"",0,0,0,0,0,0,0,0,0,0,  0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
    [0,0,0,0,0,0,"",0,0,0,0,0,0,4,0,0,  0,0,2,1,1,0,1,0,0,0,0,0,0,0,0,0],
    [0,0,0,0,0,0,0,"",2,0,2,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,1,1,0,4,0,0],
-   [0,0,0,0,0,0,0,0,"",0,1,1,0,0,1,0,  0,2,0,0,0,0,0,0,0,0,0,5,1,3,2,2],
+   [0,0,0,0,0,0,0,0,"",0,1,1,0,0,1,0,  0,2,0,0,0,0,0,0,0,0,0,9,2,0,2,2],
    [0,0,0,0,0,0,0,0,0,"",0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
    [0,0,0,0,0,0,0,0,0,0,"",0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
    [0,0,0,0,0,0,0,0,0,0,0,"",0,0,0,0,  0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
-   [0,0,0,0,0,0,0,0,0,0,0,0,"",0,0,0,  4,0,0,0,0,0,0,5,2,0,3,0,0,0,0,0],
+   [0,0,0,0,0,0,0,0,0,0,0,0,"",0,0,0,  4,0,0,0,0,0,0,8,2,0,3,0,0,0,0,0],
    [0,0,0,0,0,0,0,0,0,0,0,0,0,"",0,0,  0,0,0,3,0,0,6,0,0,0,0,0,0,0,0,0],
-   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,"",0,  0,0,0,0,0,2,0,0,0,0,0,1,3,0,0,0],
+   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,"",0,  0,0,0,0,0,2,0,0,0,0,0,1,5,0,0,0],
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"",  0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,5],
 
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  "",0,0,0,0,0,0,7,7,0,8,0,0,0,0,0],
@@ -38,7 +38,7 @@
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,"",0,0,0,0,0,0,0,0,0,0,0,0],
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,"",0,7,0,0,0,0,0,0,0,0,0],
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,"",0,0,0,0,0,1,3,0,0,0],
-   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,"",0,0,0,0,0,0,0,0,0],
+   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,"",0,0,0,0,0,0,0,2,0],
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,"",5,1,7,0,0,0,0,0],
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,"",1,8,0,0,0,0,0],
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,"",3,0,0,0,0,0],
@@ -51,7 +51,8 @@
  ];
 
 previousSUM = 0;
-limit = 60;
+limit = 3;
+limit2 = 60;
 gauge(0,0);
 (function($){
 
@@ -329,7 +330,8 @@ function gauge (previousSUM, conflictSUM) {
 
 function generateSpins() {
 
-  while(conflictSUM == 0 || conflictSUM > limit) {
+  exceded = true;
+  while(exceded) {
     conflictSUM = 0;
     spinsArray = [];
     exclusionsArray = [];
@@ -389,24 +391,42 @@ function generateSpins() {
     //sorting the array - crucial for pair checking with the matrix
     sortedArray = spinsArray.sort(function(a, b){return a - b});
 
+    oldSUM = 0;
+    maxCON = 0;
     for (i=0; i<9; i++) {
       for (j=i+1; j<10; j++) {
+        conflictSUM +=SYNERGIES[sortedArray[i]][sortedArray[j]];
+        maxCON = SYNERGIES[sortedArray[i]][sortedArray[j]];
+        if (oldSUM > maxCON) maxCON = oldSUM;
+        oldSUM = maxCON;
         if (SYNERGIES[sortedArray[i]][sortedArray[j]] > 0) {
-          conflictSUM += SYNERGIES[sortedArray[i]][sortedArray[j]];
           sumsText += SYNERGIES[sortedArray[i]][sortedArray[j]] + "<br>";
           combinationsText += NAMES[sortedArray[i]] + "&nbsp; + &nbsp;" + NAMES[sortedArray[j]] + "<br>"; }
       }
     }
+
+    if (maxCON <= limit && conflictSUM <= limit2) exceded = false;
+  }
+}
+
+function changeLimit2 (x) {
+  if (x < 0 && limit2 > 20) {
+    limit2 -=5;
+    document.getElementById("limit-image2").style.marginLeft = 200 + (-10 * limit2) + "px";
+  }
+  if (x > 0 && limit2 < 60) {
+    limit2 +=5;
+    document.getElementById("limit-image2").style.marginLeft = 200 + (-10 * limit2) + "px";
   }
 }
 
 function changeLimit (x) {
-  if (x < 0 && limit > 20) {
-    limit -=5;
-    document.getElementById("limit-image").style.marginLeft = 200 + (-10 * limit) + "px";
+  if (x < 0 && limit > 1) {
+    limit -=1;
+    document.getElementById("limit-image").style.marginLeft = 50 + (-50 * limit) + "px";
   }
-  if (x > 0 && limit < 60) {
-    limit +=5;
-    document.getElementById("limit-image").style.marginLeft = 200 + (-10 * limit) + "px";
+  if (x > 0 && limit < 9) {
+    limit +=1;
+    document.getElementById("limit-image").style.marginLeft = 50 + (-50 * limit) + "px";
   }
 }
