@@ -102,9 +102,9 @@
                 <div id="slot-belly">
 
                   <div id="main-buttons-div">
-                    <a class="button" href="https://docs.google.com/spreadsheets/d/1PIUzO9XLF-MHSrTDP9QU2VW3ce7hJNciAR-G7N-RBUA/edit#gid=330638583" target="_blank">SYNERGIES</a>
+                    <a class="button" href="https://docs.google.com/spreadsheets/d/1dRpa9eUXjvPWg9-xyvaWrnD24I8ROXntFxRnswNBg40/edit?usp=sharing" target="_blank">SYNERGIES</a>
                     <a class="button" href="https://boardgamegeek.com/thread/2023541/quantifying-milestone-and-awards-synergy-randomiza" target="_blank">TOPIC</a>
-                    <a class="button" href="https://github.com/ssimeonoff/ssimeonoff.github.io" target="_blank">CODE</a>
+                    <a class="button" href="https://github.com/samyelias/samyelias.github.io" target="_blank">CODE</a>
                   </div>
 
                   <div id="nozzle">
@@ -123,7 +123,17 @@
                   <div id="limit-wheels">
                     <div id="wheel-limit" class="wheel">
                       <div class="overlay"></div>
-                        <img id="limit-image" src="images/limits.png">
+                        <img id="limit-image" style="margin-left: -100px" src="images/limits2.png">
+                    </div>
+                  </div>
+
+                  <div class="button22" onclick="changeLimit2(-1);"><</div>
+                  <div class="button22" onclick="changeLimit2(1);" style="margin-left: 884px;border-radius: 2px 40px 40px 2px;">></div>
+                  <div id="limit-frame2"></div>
+                  <div id="limit-wheels2">
+                    <div id="wheel-limit2" class="wheel">
+                      <div class="overlay"></div>
+                        <img id="limit-image2" src="images/limits.png">
                     </div>
                   </div>
 
@@ -259,7 +269,7 @@
                     <option value="12">POLAR EXPLORER</option>
                     <option value="13">ENERGIZER</option>
                     <option value="14">RIM SETTLER</option>
-                    <option value="15">HOVERLORD</option>
+                    <option selected value="15">HOVERLORD</option>
                     <option disabled value="">--- AWARDS ---</option>
                     <option value="16">LANDLORD</option>
                     <option value="17">SCIENTIST</option>
@@ -277,6 +287,44 @@
                     <option value="29">EXCENTRIC</option>
                     <option value="30">CONTRACTOR</option>
                     <option value="31">VENUPHILE</option>
+                  </select>
+
+                  <select  style="margin-top:330px;" class="btn-exclude"  size="1" name="generations" onchange=" ">
+                    <option selected value="label">SELECT TO EXCLUDE</option>
+                    <option disabled value="">--- MILESTONES ---</option>
+                    <option value="0">TERRAFORMER</option>
+                    <option value="1">MAYOR</option>
+                    <option value="2">GARDENER</option>
+                    <option value="3">BUILDER</option>
+                    <option value="4">PLANNER</option>
+                    <option value="5">GENERALIST</option>
+                    <option value="6">SPECIALIST</option>
+                    <option value="7">ECOLOGIST</option>
+                    <option value="8">TYCOON</option>
+                    <option value="9">LEGEND</option>
+                    <option value="10">DIVERSIFIER</option>
+                    <option value="11">TACTICIAN</option>
+                    <option value="12">POLAR EXPLORER</option>
+                    <option value="13">ENERGIZER</option>
+                    <option value="14">RIM SETTLER</option>
+                    <option value="15">HOVERLORD</option>
+                    <option disabled value="">--- AWARDS ---</option>
+                    <option value="16">LANDLORD</option>
+                    <option value="17">SCIENTIST</option>
+                    <option value="18">BANKER</option>
+                    <option value="19">THERMALIST</option>
+                    <option value="20">MINER</option>
+                    <option value="21">CELEBRITY</option>
+                    <option value="22">INDUSTRIALIST</option>
+                    <option value="23">DESERT SETTLER</option>
+                    <option value="24">ESTATE DEALER</option>
+                    <option value="25">BENEFACTOR</option>
+                    <option value="26">CULTIVATOR</option>
+                    <option value="27">MAGNATE</option>
+                    <option value="28">SPACE BARON</option>
+                    <option value="29">EXCENTRIC</option>
+                    <option value="30">CONTRACTOR</option>
+                    <option selected value="31">VENUPHILE</option>
                   </select>
 
                 </div>
