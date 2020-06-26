@@ -14,11 +14,31 @@
          "CULTIVATOR", "MAGNATE", "SPACE BARON", "EXCENTRIC", "CONTRACTOR",
          "VENUPHILE"]
 
+ var WEIGHT =[5,6,12,7,3,
+         3, 4, 8,6,3,
+         4, 3, 7,5,6,
+         3, 
+         20,1, 1,1,8,
+         1, 7,20,20,1,
+         30, 1, 2,1,6,
+         3];
+
+
+ var CLEARWEIGHT = WEIGHT.slice();
+
+ var new_weights = [];
+ var rolling_sum = 0;
+ for (var kk=0;kk<32;kk++) {
+   rolling_sum += WEIGHT[kk];
+   new_weights.push(rolling_sum*10);
+ }
+ var SUMWEIGHT = new_weights.slice();
+
  SYNERGIES = [
    ["",0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,  1,0,0,1,0,0,0,1,1,9,2,0,0,0,0,0],
-   [0,"",3,0,0,0,0,0,0,0,0,0,8,0,0,0,  6,0,0,0,0,0,0,4,4,0,6,0,0,0,0,0],
-   [0,0,"",0,0,0,0,4,0,0,0,0,8,0,0,0,  6,0,0,0,0,0,0,4,5,2,9,0,0,0,0,0],
-   [0,0,0,"",0,0,0,0,4,0,0,0,0,0,0,0,  0,0,0,0,1,0,1,0,0,0,0,5,0,0,9,0],
+   [0,"",3,0,0,0,0,0,0,0,0,0,8,0,0,0,  6,0,0,0,0,0,0,3,3,0,3,0,0,0,0,0],
+   [0,0,"",0,0,0,0,4,0,0,0,0,8,0,0,0,  6,0,0,0,0,0,0,3,3,2,9,0,0,0,0,0],
+   [0,0,0,"",0,0,0,0,4,0,0,0,0,0,0,0,  0,0,0,0,1,0,1,0,0,0,0,3,0,0,9,0],
    [0,0,0,0,"",0,0,0,0,0,0,0,0,0,0,0,  0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
    [0,0,0,0,0,"",0,0,0,0,0,0,0,0,0,0,  0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
    [0,0,0,0,0,0,"",0,0,0,0,0,0,4,0,0,  0,0,2,1,1,0,1,0,0,0,0,0,0,0,0,0],
@@ -299,6 +319,51 @@ gauge(0,0);
 
 })(jQuery);
 
+function clear_weights(goal) {
+  CLEARWEIGHT[goal] = 0;
+  for (var i=0;i<32;i++) {
+    if (SYNERGIES[i][goal] > limit) {
+      CLEARWEIGHT[i] = 0;
+    }
+  }
+  for (var i=0;i<32;i++) {
+    if (SYNERGIES[goal][i] > limit) {
+      CLEARWEIGHT[i] = 0;
+    }
+  }
+
+  SUMWEIGHT = [];
+  rolling_sum = 0;
+  for (var kk=0;kk<32;kk++) {
+    rolling_sum += CLEARWEIGHT[kk];
+    SUMWEIGHT.push(rolling_sum*10);
+  }
+}
+
+function weighted_milestone_roll() {
+  var roll = parseInt(Math.random() * SUMWEIGHT[15]);
+  var slot = 15;
+  for (var k=0;k<16;k++) {
+    if (SUMWEIGHT[k] > roll) {
+      slot = k;
+      break;
+    }
+  }
+  return slot;
+}
+
+function weighted_award_roll() {
+  var roll = parseInt(Math.random() * (SUMWEIGHT[31]-SUMWEIGHT[15])) + SUMWEIGHT[15];
+  var slot = 31;
+  for (var k=16;k<32;k++) {
+    if (SUMWEIGHT[k] > roll) {
+      slot = k;
+      break;
+    }
+  }
+  return slot;
+}
+
 function gauge (previousSUM, conflictSUM) {
   google.charts.load('current', {'packages':['gauge']});
       google.charts.setOnLoadCallback(drawChart);
@@ -346,46 +411,24 @@ function generateSpins() {
     console.log(exclusionsArray)
     //////// Calculating the conflict SUM /////////////
 
-    spin[0] = parseInt(Math.random() * 16);
-    while (spinsArray.indexOf(spin[0]) > -1 || exclusionsArray.indexOf(spin[0]) > -1) { spin[0] = parseInt(Math.random() * 16);}
-    spinsArray.push(spin[0]);
-
-    spin[1] = parseInt(Math.random() * 16);
-    while (spinsArray.indexOf(spin[1]) > -1 || exclusionsArray.indexOf(spin[1]) > -1) { spin[1] = parseInt(Math.random() * 16);}
-    spinsArray.push(spin[1]);
-
-    spin[2] = parseInt(Math.random() * 16);
-    while (spinsArray.indexOf(spin[2]) > -1 || exclusionsArray.indexOf(spin[2]) > -1) { spin[2] = parseInt(Math.random() * 16);}
-    spinsArray.push(spin[2]);
-
-    spin[3] = parseInt(Math.random() * 16);
-    while (spinsArray.indexOf(spin[3]) > -1 || exclusionsArray.indexOf(spin[3]) > -1) { spin[3] = parseInt(Math.random() * 16);}
-    spinsArray.push(spin[3]);
-
-    spin[4] = parseInt(Math.random() * 16);
-    while (spinsArray.indexOf(spin[4]) > -1 || exclusionsArray.indexOf(spin[4]) > -1) { spin[4] = parseInt(Math.random() * 16);}
-    spinsArray.push(spin[4]);
-
     //adding offset of 16 for the awards
-    spin[5] = parseInt(Math.random() * 16) + 16;
-    while (spinsArray.indexOf(spin[5]) > -1 || exclusionsArray.indexOf(spin[5]) > -1) { spin[5] = parseInt(Math.random() * 16) + 16;}
-    spinsArray.push(spin[5]);
+    for (var aw=5;aw<10;aw++) {
+      spin[aw] = weighted_award_roll(); //parseInt(Math.random() * 16) + 16;
+      while (spinsArray.indexOf(spin[aw]) > -1 || exclusionsArray.indexOf(spin[aw]) > -1) { 
+        spin[aw] = weighted_award_roll(); //parseInt(Math.random() * 16) + 16;
+      }
+      spinsArray.push(spin[aw]);
+      clear_weights(spin[aw]);
+    }
 
-    spin[6] = parseInt(Math.random() * 16) + 16;
-    while (spinsArray.indexOf(spin[6]) > -1 || exclusionsArray.indexOf(spin[6]) > -1) { spin[6] = parseInt(Math.random() * 16) + 16;}
-    spinsArray.push(spin[6]);
-
-    spin[7] = parseInt(Math.random() * 16) + 16;
-    while (spinsArray.indexOf(spin[7]) > -1 || exclusionsArray.indexOf(spin[7]) > -1) { spin[7] = parseInt(Math.random() * 16) + 16;}
-    spinsArray.push(spin[7]);
-
-    spin[8] = parseInt(Math.random() * 16) + 16;
-    while (spinsArray.indexOf(spin[8]) > -1 || exclusionsArray.indexOf(spin[8]) > -1) { spin[8] = parseInt(Math.random() * 16) + 16;}
-    spinsArray.push(spin[8]);
-
-    spin[9] = parseInt(Math.random() * 16) + 16;
-    while (spinsArray.indexOf(spin[9]) > -1 || exclusionsArray.indexOf(spin[9]) > -1) { spin[9] = parseInt(Math.random() * 16) + 16;}
-    spinsArray.push(spin[9]);
+    for (var mi=0;mi<5;mi++) {
+      spin[mi] = weighted_milestone_roll(); //parseInt(Math.random() * 16);
+      while (spinsArray.indexOf(spin[mi]) > -1 || exclusionsArray.indexOf(spin[mi]) > -1) { 
+        spin[mi] = weighted_milestone_roll(); //parseInt(Math.random() * 16);
+      }
+      spinsArray.push(spin[mi]);
+      clear_weights(spin[mi]);
+    }
 
     //loop through the matrix interconnections
     //sorting the array - crucial for pair checking with the matrix
@@ -406,6 +449,12 @@ function generateSpins() {
     }
 
     if (maxCON <= limit && conflictSUM <= limit2) exceded = false;
+    CLEARWEIGHT = WEIGHT.slice();
+    rolling_sum = 0;
+    for (var kk=0;kk<32;kk++) {
+      rolling_sum += CLEARWEIGHT[kk];
+      SUMWEIGHT.push(rolling_sum*10);
+    }
   }
 }
 
