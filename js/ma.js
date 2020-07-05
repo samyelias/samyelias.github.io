@@ -468,12 +468,12 @@ function generateSpins() {
     maxCON = 0;
     for (i=0; i<9; i++) {
       for (j=i+1; j<10; j++) {
-        conflictSUM +=SYNERGIES[sortedArray[i]][sortedArray[j]];
-        maxCON = SYNERGIES[sortedArray[i]][sortedArray[j]];
+        conflictSUM += synergy_matrix[sortedArray[i]][sortedArray[j]];
+        maxCON = synergy_matrix[sortedArray[i]][sortedArray[j]];
         if (oldSUM > maxCON) maxCON = oldSUM;
         oldSUM = maxCON;
-        if (SYNERGIES[sortedArray[i]][sortedArray[j]] > 0) {
-          sumsText += SYNERGIES[sortedArray[i]][sortedArray[j]] + "<br>";
+        if (synergy_matrix[sortedArray[i]][sortedArray[j]] > 0) {
+          sumsText += synergy_matrix[sortedArray[i]][sortedArray[j]] + "<br>";
           combinationsText += NAMES[sortedArray[i]] + "&nbsp; + &nbsp;" + NAMES[sortedArray[j]] + "<br>"; }
       }
     }
