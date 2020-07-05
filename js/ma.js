@@ -16,6 +16,16 @@ NAMES = ["TERRAFORMER", "MAYOR", "GARDENER", "BUILDER", "PLANNER",
          "CULTIVATOR", "MAGNATE", "SPACE BARON", "EXCENTRIC", "CONTRACTOR",
          "VENUPHILE"]
 
+var WEIGHT =[5,6.5,30,7,3,
+         3, 4, 12,7,3,
+         4, 3, 10,6,6,
+         3, 
+         20,0.7,0.7,0.6,9.5,
+         0.7, 9,20,20,0.7,
+         30, 0.7, 1.2,0.7,10,
+         3];
+
+
 var WEIGHT_ELYSIUM =[5,6.5,30,7,3,
          3, 4, 10,7,3,
          4, 3, 10,6,6,
