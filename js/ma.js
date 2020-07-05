@@ -1,11 +1,13 @@
 /**
- * jQuery Slot Machine by Stefan Petre.
- * http://www.eyecon.ro/slotmachine/
- *
- * Modified.
- */
+* jQuery Slot Machine by Stefan Petre.
+* http://www.eyecon.ro/slotmachine/
+*
+* Modified.
+*/
 
- NAMES = ["TERRAFORMER", "MAYOR", "GARDENER", "BUILDER", "PLANNER",
+var MAPS = ["ORIGINAL", "HELLAS", "ELYSIUM"];
+
+NAMES = ["TERRAFORMER", "MAYOR", "GARDENER", "BUILDER", "PLANNER",
          "GENERALIST", "SPECIALIST", "ECOLOGIST", "TYCOON", "LEGEND",
          "DIVERSIFIER", "TACTICIAN", "POLAR EXPLORER", "ENERGIZER", "RIM SETTLER",
          "HOVERLORD",
@@ -14,27 +16,19 @@
          "CULTIVATOR", "MAGNATE", "SPACE BARON", "EXCENTRIC", "CONTRACTOR",
          "VENUPHILE"]
 
-var WEIGHT =[5,6,18,7,3,
+var WEIGHT_ELYSIUM =[5,6.5,30,7,3,
          3, 4, 10,7,3,
          4, 3, 10,6,6,
          3, 
-         20,0.7,0.7,0.7,9,
-         0.7, 7,20,20,0.9,
-         30, 0.9, 1.7,0.9,8,
+         29,0.8,0.8,0.8,9,
+         0.8, 8,15,15,0.9,
+         30, 0.9, 1.7,0.8,8,
          3];
 
+var clearweight_bymap = []
+var sumweight_bymap = []
 
- var CLEARWEIGHT = WEIGHT.slice();
-
- var new_weights = [];
- var rolling_sum = 0;
- for (var kk=0;kk<32;kk++) {
-   rolling_sum += WEIGHT[kk];
-   new_weights.push(rolling_sum*10);
- }
- var SUMWEIGHT = new_weights.slice();
-
- SYNERGIES = [
+SYNERGIES = [
    ["",0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,  1,0,0,1,0,0,0,1,1,9,2,0,0,0,0,0],
    [0,"",3,0,0,0,0,0,0,0,0,0,8,0,0,0,  6,0,0,0,0,0,0,3,3,0,3,0,0,0,0,0],
    [0,0,"",0,0,0,0,4,0,0,0,0,8,0,0,0,  6,0,0,0,0,0,0,3,3,2,9,0,0,0,0,0],
@@ -68,7 +62,14 @@ var WEIGHT =[5,6,18,7,3,
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,"",0,2],
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,"",0],
    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""]
- ];
+];
+
+var SYNERGIES_ELYSIUM = [];
+for (var i = 0; i < SYNERGIES.length; i++)
+   SYNERGIES_ELYSIUM[i] = SYNERGIES[i].slice();
+SYNERGIES_ELYSIUM[23][24] = 0;
+
+var synergy_matrix = []
 
 previousSUM = 0;
 limit = 3;
@@ -320,31 +321,31 @@ gauge(0,0);
 })(jQuery);
 
 function clear_weights(goal) {
-  CLEARWEIGHT[goal] = 0;
+  clearweight_bymap[goal] = 0;
   for (var i=0;i<32;i++) {
-    if (SYNERGIES[i][goal] > limit) {
-      CLEARWEIGHT[i] = 0;
+    if (synergy_matrix[i][goal] > limit) {
+      clearweight_bymap[i] = 0;
     }
   }
   for (var i=0;i<32;i++) {
-    if (SYNERGIES[goal][i] > limit) {
-      CLEARWEIGHT[i] = 0;
+    if (synergy_matrix[goal][i] > limit) {
+      clearweight_bymap[i] = 0;
     }
   }
 
-  SUMWEIGHT = [];
+  sumweight_bymap = [];
   rolling_sum = 0;
   for (var kk=0;kk<32;kk++) {
-    rolling_sum += CLEARWEIGHT[kk];
-    SUMWEIGHT.push(rolling_sum*10);
+    rolling_sum += clearweight_bymap[kk];
+    sumweight_bymap.push(rolling_sum*10);
   }
 }
 
 function weighted_milestone_roll() {
-  var roll = parseInt(Math.random() * SUMWEIGHT[15]);
+  var roll = parseInt(Math.random() * sumweight_bymap[15]);
   var slot = 15;
   for (var k=0;k<16;k++) {
-    if (SUMWEIGHT[k] > roll) {
+    if (sumweight_bymap[k] > roll) {
       slot = k;
       break;
     }
@@ -353,10 +354,10 @@ function weighted_milestone_roll() {
 }
 
 function weighted_award_roll() {
-  var roll = parseInt(Math.random() * (SUMWEIGHT[31]-SUMWEIGHT[15])) + SUMWEIGHT[15];
+  var roll = parseInt(Math.random() * (sumweight_bymap[31]-sumweight_bymap[15])) + sumweight_bymap[15];
   var slot = 31;
   for (var k=16;k<32;k++) {
-    if (SUMWEIGHT[k] > roll) {
+    if (sumweight_bymap[k] > roll) {
       slot = k;
       break;
     }
@@ -396,12 +397,30 @@ function gauge (previousSUM, conflictSUM) {
 function generateSpins() {
 
   exceded = true;
+ 
+  var random_map_roll = parseInt(Math.random() * 3);
+  var map_choice = MAPS[random_map_roll];
+ 
   while(exceded) {
     conflictSUM = 0;
     spinsArray = [];
     exclusionsArray = [];
     combinationsText = "";
     sumsText = "";
+
+    synergy_matrix = SYNERGIES;
+    clearweight_bymap = WEIGHT.slice();
+    if (map_choice == "ELYSIUM") {
+      synergy_matrix = SYNERGIES_ELYSIUM;
+      clearweight_bymap = WEIGHT_ELYSIUM.slice();
+    }
+
+    sumweight_bymap = [];
+    var rolling_sum = 0;
+    for (var kk=0;kk<32;kk++) {
+      rolling_sum += clearweight_bymap[kk];
+      sumweight_bymap.push(rolling_sum*10);
+    }
 
     //////// Adding exclusions //////////
     exclusions = document.querySelectorAll("select");
@@ -418,7 +437,7 @@ function generateSpins() {
         spin[aw] = weighted_award_roll(); //parseInt(Math.random() * 16) + 16;
       }
       spinsArray.push(spin[aw]);
-      clear_weights(spin[aw]);
+      clear_weights(spin[aw],synergy_matrix);
     }
 
     for (var mi=0;mi<5;mi++) {
@@ -427,7 +446,7 @@ function generateSpins() {
         spin[mi] = weighted_milestone_roll(); //parseInt(Math.random() * 16);
       }
       spinsArray.push(spin[mi]);
-      clear_weights(spin[mi]);
+      clear_weights(spin[mi],synergy_matrix);
     }
 
     //loop through the matrix interconnections
@@ -444,7 +463,7 @@ function generateSpins() {
         oldSUM = maxCON;
         if (SYNERGIES[sortedArray[i]][sortedArray[j]] > 0) {
           sumsText += SYNERGIES[sortedArray[i]][sortedArray[j]] + "<br>";
-          combinationsText += NAMES[sortedArray[i]] + "&nbsp; + &nbsp;" + NAMES[sortedArray[j]] + "<br>"; }
+          combinationsText += "Map: " + map_choice + "&nbsp; + &nbsp;" + NAMES[sortedArray[i]] + "&nbsp; + &nbsp;" + NAMES[sortedArray[j]] + "<br>"; }
       }
     }
 
