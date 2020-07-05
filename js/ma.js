@@ -478,11 +478,6 @@ function generateSpins() {
     }
 
     if (maxCON <= limit && conflictSUM <= limit2) exceded = false;
-    CLEARWEIGHT = WEIGHT.slice();
-    rolling_sum = 0;
-    for (var kk=0;kk<32;kk++) {
-      rolling_sum += CLEARWEIGHT[kk];
-      SUMWEIGHT.push(rolling_sum*10);
     }
   }
 }
