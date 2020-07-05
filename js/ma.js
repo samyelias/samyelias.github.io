@@ -473,7 +473,7 @@ function generateSpins() {
         oldSUM = maxCON;
         if (SYNERGIES[sortedArray[i]][sortedArray[j]] > 0) {
           sumsText += SYNERGIES[sortedArray[i]][sortedArray[j]] + "<br>";
-          combinationsText += "Map: " + map_choice + "&nbsp; + &nbsp;" + NAMES[sortedArray[i]] + "&nbsp; + &nbsp;" + NAMES[sortedArray[j]] + "<br>"; }
+          combinationsText += NAMES[sortedArray[i]] + "&nbsp; + &nbsp;" + NAMES[sortedArray[j]] + "<br>"; }
       }
     }
 
