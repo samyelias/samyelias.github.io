@@ -409,6 +409,7 @@ function generateSpins() {
   exceded = true;
  
   var random_map_roll = parseInt(Math.random() * 3);
+  random_map_roll = 2;
   var map_choice = MAPS[random_map_roll];
  
   while(exceded) {
