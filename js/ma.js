@@ -406,7 +406,7 @@ function generateSpins() {
     spinsArray = [];
     exclusionsArray = [];
     combinationsText = "";
-    sumsText = "";
+    sumsText = "Map: " + map_choice + "<br><br>";
 
     synergy_matrix = SYNERGIES;
     clearweight_bymap = WEIGHT.slice();
