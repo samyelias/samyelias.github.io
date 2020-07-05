@@ -478,7 +478,6 @@ function generateSpins() {
     }
 
     if (maxCON <= limit && conflictSUM <= limit2) exceded = false;
-    }
   }
 }
 
