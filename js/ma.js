@@ -35,7 +35,7 @@ var WEIGHT_ELYSIUM =[6,4,11,7.5,3,
          30, 0.5, 0.9,0.5,10,
          0.5];
 
-var DESERT_ESTATE_FACTOR = 0.04;
+var DESERT_ESTATE_FACTOR = 0.025;
 
 var clearweight_bymap = []
 var sumweight_bymap = []
