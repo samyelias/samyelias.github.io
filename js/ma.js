@@ -28,12 +28,14 @@ var WEIGHT =[5,6.5,30,7,3,
 
 var WEIGHT_ELYSIUM =[5,6.5,30,7,3,
          3, 4, 10,7,3,
-         4, 3, 10,6,6,
+         4, 3, 15,7,6,
          3, 
          29,0.8,0.8,0.8,9,
-         0.8, 8,15,15,0.9,
+         0.8, 8,22,22,0.9,
          30, 0.9, 1.7,0.8,8,
          3];
+
+var DESERT_ESTATE_FACTOR = 0.04;
 
 var clearweight_bymap = []
 var sumweight_bymap = []
@@ -332,6 +334,10 @@ gauge(0,0);
 
 function clear_weights(goal) {
   clearweight_bymap[goal] = 0;
+  // reduce likelihood of both Desert Settler and Estate Dealer on
+  // Elysium map, given both are heavily weighted to even out chances
+  if (goal == 23) clearweight_bymap[24] = clearweight_bymap[24]*DESERT_ESTATE_FACTOR;
+  if (goal == 24) clearweight_bymap[23] = clearweight_bymap[23]*DESERT_ESTATE_FACTOR;
   for (var i=0;i<32;i++) {
     if (synergy_matrix[i][goal] > limit) {
       clearweight_bymap[i] = 0;
@@ -440,20 +446,19 @@ function generateSpins() {
     console.log(exclusionsArray)
     //////// Calculating the conflict SUM /////////////
 
-    //adding offset of 16 for the awards
     for (var aw=5;aw<10;aw++) {
-      spin[aw] = weighted_award_roll(); //parseInt(Math.random() * 16) + 16;
+      spin[aw] = weighted_award_roll();
       while (spinsArray.indexOf(spin[aw]) > -1 || exclusionsArray.indexOf(spin[aw]) > -1) { 
-        spin[aw] = weighted_award_roll(); //parseInt(Math.random() * 16) + 16;
+        spin[aw] = weighted_award_roll();
       }
       spinsArray.push(spin[aw]);
       clear_weights(spin[aw],synergy_matrix);
     }
 
     for (var mi=0;mi<5;mi++) {
-      spin[mi] = weighted_milestone_roll(); //parseInt(Math.random() * 16);
+      spin[mi] = weighted_milestone_roll();
       while (spinsArray.indexOf(spin[mi]) > -1 || exclusionsArray.indexOf(spin[mi]) > -1) { 
-        spin[mi] = weighted_milestone_roll(); //parseInt(Math.random() * 16);
+        spin[mi] = weighted_milestone_roll();
       }
       spinsArray.push(spin[mi]);
       clear_weights(spin[mi],synergy_matrix);
