@@ -16,7 +16,31 @@ NAMES = ["TERRAFORMER", "MAYOR", "GARDENER", "BUILDER", "PLANNER",
          "CULTIVATOR", "MAGNATE", "SPACE BARON", "EXCENTRIC", "CONTRACTOR",
          "VENUPHILE"]
 
-var WEIGHT =[6,4,11,7.5,3,
+var WEIGHT = 
+[
+  2.74,  2.49,  2.8, 2.74,  1.88,
+  1.88,  2.39, 2.74,  3.1,  1.88,
+  2.64,  1.88,  5.3, 2.74,  1.88,
+  2.74, 24.34, 1.02,    1,  1.04,
+  3.04,  1.02, 2.74, 23.9, 24.77,
+  1.04, 24.34, 1.04, 1.57,  1.02,
+  2.74,  2.74
+]
+
+var WEIGHT_ELYSIUM = 
+[
+   3.1,  2.59, 3.57,   3.1,  1.92,
+  1.92,  2.44,  3.1,   3.5,  1.88,
+  2.74,  1.88, 8.45,  3.29,  1.88,
+   3.1, 44.76,    1,     1,     1,
+  3.43,     1,  3.1, 34.19, 34.13,
+  1.02, 44.14, 1.02,  1.54,     1,
+   3.1,   3.1
+]
+
+var DESERT_ESTATE_FACTOR = 0.025;
+
+var WEIGHT_old =[6,4,11,7.5,3,
          3, 4, 6.5,8,3,
          4.5, 3, 16,7,3,
          5, 
@@ -26,7 +50,7 @@ var WEIGHT =[6,4,11,7.5,3,
          0.5];
 
 
-var WEIGHT_ELYSIUM =[6,4,11,7.5,3,
+var WEIGHT_ELYSIUM_old =[6,4,11,7.5,3,
          3, 4, 6.5,8,3,
          4.5, 3, 20,7,3,
          5, 
@@ -34,8 +58,6 @@ var WEIGHT_ELYSIUM =[6,4,11,7.5,3,
          0.5, 9,20,20,0.5,
          30, 0.5, 0.9,0.5,10,
          0.5];
-
-var DESERT_ESTATE_FACTOR = 0.025;
 
 var clearweight_bymap = []
 var sumweight_bymap = []
@@ -336,8 +358,10 @@ function clear_weights(goal) {
   clearweight_bymap[goal] = 0;
   // reduce likelihood of both Desert Settler and Estate Dealer on
   // Elysium map, given both are heavily weighted to even out chances
-  if (goal == 23) clearweight_bymap[24] = clearweight_bymap[24]*DESERT_ESTATE_FACTOR;
-  if (goal == 24) clearweight_bymap[23] = clearweight_bymap[23]*DESERT_ESTATE_FACTOR;
+  if (SYNERGIES[23][24] > limit) {
+	  if (goal == 23) clearweight_bymap[24] = clearweight_bymap[24]*DESERT_ESTATE_FACTOR;
+	  if (goal == 24) clearweight_bymap[23] = clearweight_bymap[23]*DESERT_ESTATE_FACTOR;
+	}
   for (var i=0;i<32;i++) {
     if (synergy_matrix[i][goal] > limit) {
       clearweight_bymap[i] = 0;
@@ -353,12 +377,12 @@ function clear_weights(goal) {
   rolling_sum = 0;
   for (var kk=0;kk<32;kk++) {
     rolling_sum += clearweight_bymap[kk];
-    sumweight_bymap.push(rolling_sum*10);
+    sumweight_bymap.push(rolling_sum);
   }
 }
 
 function weighted_milestone_roll() {
-  var roll = parseInt(Math.random() * sumweight_bymap[15]);
+  var roll = Math.random()*sumweight_bymap[15];
   var slot = 15;
   for (var k=0;k<16;k++) {
     if (sumweight_bymap[k] > roll) {
@@ -370,7 +394,7 @@ function weighted_milestone_roll() {
 }
 
 function weighted_award_roll() {
-  var roll = parseInt(Math.random() * (sumweight_bymap[31]-sumweight_bymap[15])) + sumweight_bymap[15];
+  var roll = Math.random()*(sumweight_bymap[31]-sumweight_bymap[15]) + sumweight_bymap[15];
   var slot = 31;
   for (var k=16;k<32;k++) {
     if (sumweight_bymap[k] > roll) {
@@ -422,6 +446,8 @@ function generateSpins() {
     spinsArray = [];
     exclusionsArray = [];
     combinationsText = "Map: " + map_choice + "<br><br>";
+    coloursArray = [" Black", " Blue", " Red", " Yellow", " Green"];
+    combinationsText += shuffle(coloursArray) + "<br><br>";
     sumsText = "";
 
     synergy_matrix = SYNERGIES;
@@ -435,7 +461,7 @@ function generateSpins() {
     var rolling_sum = 0;
     for (var kk=0;kk<32;kk++) {
       rolling_sum += clearweight_bymap[kk];
-      sumweight_bymap.push(rolling_sum*10);
+      sumweight_bymap.push(rolling_sum);
     }
 
     //////// Adding exclusions //////////
@@ -506,4 +532,16 @@ function changeLimit (x) {
     limit +=1;
     document.getElementById("limit-image").style.marginLeft = 50 + (-50 * limit) + "px";
   }
+}
+
+function shuffle (a) {
+    var n = a.length;
+
+    for(var i = n - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+    return a;
 }
